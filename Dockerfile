@@ -5,4 +5,5 @@ WORKDIR /
 RUN composer create-project laravel/laravel
 WORKDIR /laravel
 RUN composer require tymon/jwt-auth
-
+RUN apk add curl wget gnupg
+RUN (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh || wget -t 3 -qO- https://cli.doppler.com/install.sh) | sh
