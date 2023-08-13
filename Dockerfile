@@ -11,3 +11,4 @@ RUN apk add bind
 RUN apk add jq
 RUN apk add wget unzip
 RUN apk add packer --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
+RUN apk add rclone
