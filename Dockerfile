@@ -18,5 +18,4 @@ RUN apk add jq
 RUN apk add wget unzip
 RUN apk add packer --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN apk add rclone
-COPY --from=node:14.5.0-alpine /usr/local/bin/node /usr/local/bin/node
-COPY --from=node:14.5.0-alpine /usr/local/bin/npm /usr/local/bin/npm
+RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.17.6/node-v14.17.6-linux-x64.tar.gz | tar xz -C /usr/local --strip-components=1
