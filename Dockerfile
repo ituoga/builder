@@ -27,9 +27,12 @@ RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node
 RUN apk add --no-cache libstdc++ gcompat musl-dev musl-utils musl gcc
 RUN apk add php82-pdo php82-simplexml php82-xmlreader php82-sodium php82-ftp php82-gd
 USER root
-COPY --from=python:3.10-alpine /usr/local/bin/python /usr/local/bin/python3.10
-COPY --from=python:3.10-alpine /usr/local/bin/pip3 /usr/local/bin/pip3.10
-COPY --from=python:3.10-alpine /usr/local/lib/libpython3.10.so.1.0 /usr/local/lib/libpython3.10.so.1.0
-RUN ln -sf /usr/local/bin/python3.10 /usr/bin/python
-RUN ln -sf /usr/local/bin/python3.10 /usr/bin/python3
-RUN npm config set python /usr/local/bin/python3.10
+
+WORKDIR /tmp
+RUN apk add zstd
+RUN wget https://github.com/indygreg/python-build-standalone/releases/download/20230726/cpython-3.10.12+20230726-x86_64_v4-unknown-linux-musl-noopt-full.tar.zst
+RUN zstd -d cpython*.zst && tar xf cpython*.tar
+RUN mv python/install /python3.10
+RUN rm -rf /tmp/cpython-3.10.12+20230726-x86_64_v4-unknown-linux-musl-noopt-full.tar
+RUN ln -sf /python3.10/bin/python3 /usr/bin/python
+RUN ln -sf /python3.10/bin/python3 /usr/bin/python3
