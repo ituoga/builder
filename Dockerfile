@@ -36,3 +36,8 @@ RUN mv python/install /python3.10
 RUN rm -rf /tmp/cpython-3.10.12+20230726-x86_64_v4-unknown-linux-musl-noopt-full.tar
 RUN apk add alpine-sdk make g++
 RUN npm config set python /python3.10/bin/python3
+RUN mv /usr/local/bin/npm /usr/local/bin/npm2
+RUN echo "#!/bin/bash" >> /usr/local/bin/npm
+RUN echo "/usr/local/bin/npm2 config set python /python3.10/bin/python3" >> /usr/local/bin/npm
+RUN echo "/usr/local/bin/npm2 \$@" >> /usr/local/bin/npm
+RUN chmod +x /usr/local/bin/npm
