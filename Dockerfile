@@ -30,5 +30,6 @@ USER root
 COPY --from=python:3.10-alpine /usr/local/bin/python /usr/local/bin/python3.10
 COPY --from=python:3.10-alpine /usr/local/bin/pip3 /usr/local/bin/pip3.10
 COPY --from=python:3.10-alpine /usr/local/lib/libpython3.10.so.1.0 /usr/local/lib/libpython3.10.so.1.0
-RUN ln -sf /usr/loca/bin/python3.10 /usr/bin/python
+RUN ln -sf /usr/local/bin/python3.10 /usr/bin/python
+RUN ln -sf /usr/local/bin/python3.10 /usr/bin/python3
 RUN npm config set python /usr/local/bin/python3.10
