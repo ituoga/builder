@@ -38,7 +38,7 @@ RUN apk add alpine-sdk make g++
 RUN npm config set python /python3.10/bin/python3
 RUN mv /usr/local/bin/npm /usr/local/bin/npm2
 RUN echo "#!/bin/bash" >> /usr/local/bin/npm
-RUN echo "export $PYTHON=/python3.10/bin/python3" >> /usr/local/bin/npm
+RUN echo "export PYTHON=/python3.10/bin/python3" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 config set python /python3.10/bin/python3" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 --python=/python3.10/bin/python3 \$@" >> /usr/local/bin/npm
 RUN chmod +x /usr/local/bin/npm
