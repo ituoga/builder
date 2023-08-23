@@ -34,5 +34,4 @@ RUN wget https://github.com/indygreg/python-build-standalone/releases/download/2
 RUN zstd -d cpython*.zst && tar xf cpython*.tar
 RUN mv python/install /python3.10
 RUN rm -rf /tmp/cpython-3.10.12+20230726-x86_64_v4-unknown-linux-musl-noopt-full.tar
-RUN ln -sf /python3.10/bin/python3 /usr/bin/python
-RUN ln -sf /python3.10/bin/python3 /usr/bin/python3
+RUN npm config set python /python3.10/bin/python3
