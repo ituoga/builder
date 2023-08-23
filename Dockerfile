@@ -23,7 +23,7 @@ RUN apk add jq
 RUN apk add wget unzip
 RUN apk add packer --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN apk add rclone
-RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64-musl.tar.gz | tar xz -C /usr/local --strip-components=1
+
 RUN apk add --no-cache libstdc++ gcompat musl-dev musl-utils musl gcc
 RUN apk add php82-pdo php82-simplexml php82-xmlreader php82-sodium php82-ftp php82-gd
 USER root
@@ -35,11 +35,16 @@ RUN zstd -d cpython*.zst && tar xf cpython*.tar
 RUN mv python/install /python3.10
 RUN rm -rf /tmp/cpython-3.10.12+20230726-x86_64_v4-unknown-linux-musl-noopt-full.tar
 RUN apk add alpine-sdk make g++
-RUN npm config set python /python3.10/bin/python3
+RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64-usdt.tar.gz | tar xz -C /usr/local --strip-components=1
 RUN mv /usr/local/bin/npm /usr/local/bin/npm2
 RUN echo "#!/bin/bash" >> /usr/local/bin/npm
 RUN echo "export PYTHON=/python3.10/bin/python3" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 config set python /python3.10/bin/python3" >> /usr/local/bin/npm
-RUN echo "/usr/local/bin/npm2 --python=/python3.10/bin/python3 \$@" >> /usr/local/bin/npm
+RUN echo "/usr/local/bin/npm2 \$@" >> /usr/local/bin/npm
 RUN chmod +x /usr/local/bin/npm
+RUN npm install -g prebuild-install node-addon-api defaults commander prebuild prebuild-ci --unsafe-perm=true --allow-root
+RUN npm install -g napi-build-utils --unsafe-perm=true --allow-root
+RUN npm i -g node-pre-gyp prebuild prebuildify --unsafe-perm=true --allow-root
+RUN npm install -g node-gyp --unsafe-perm=true --allow-root
+RUN npm install -g node-zopfli@2.1.4  --unsafe-perm=true --allow-root
 WORKDIR /laravel
