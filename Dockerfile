@@ -1,14 +1,19 @@
 FROM hashicorp/terraform:latest
 RUN apk update && apk add ansible bash
-RUN apk add zip php81 composer php81-curl php81-zip php81-session php81-tokenizer php81-xml php81-dom php81-xmlwriter php81-fileinfo 
-RUN apk add php81-pgsql
-RUN apk add php81-pecl-redis
-RUN apk add php81-intl php81-bcmath
-RUN apk add php81-session
-RUN ln -sf /usr/bin/php81 /usr/bin/php
-RUN php -v && sleep 10
+RUN apk add zip php82 php82-curl php82-zip php82-session php82-tokenizer php82-xml php82-dom php82-xmlwriter php82-fileinfo 
+RUN apk add php82-pgsql
+RUN apk add php82-pecl-redis
+RUN apk add php82-intl php82-bcmath
+RUN apk add php82-session
+RUN apk add php82-openssl php82-iconv php82-phar
+RUN ln -sf /usr/bin/php82 /usr/bin/php
+RUN wget -O /tmp/composer-setup.php https://getcomposer.org/installer
+RUN php -r "if (hash_file('sha384', '/tmp/composer-setup.php') === 'e21205b207c3ff031906575712edab6f13eb0b361f2085f1f1237b7126d785e826a450292b6cfd1d64d92e6563bbde02') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+RUN php /tmp/composer-setup.php 
+RUN php -r "unlink('/tmp/composer-setup.php');"
+RUN mv composer.phar /usr/bin/composer
 WORKDIR /
-RUN composer create-project laravel/laravel
+RUN composer create-project laravel/laravel laravel --no-scripts
 WORKDIR /laravel
 RUN composer require tymon/jwt-auth
 RUN apk add curl wget gnupg
