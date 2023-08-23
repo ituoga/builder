@@ -41,3 +41,4 @@ RUN echo "#!/bin/bash" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 config set python /python3.10/bin/python3" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 \$@" >> /usr/local/bin/npm
 RUN chmod +x /usr/local/bin/npm
+WORKDIR /laravel
