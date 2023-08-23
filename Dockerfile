@@ -26,3 +26,4 @@ RUN apk add rclone
 RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64-musl.tar.gz | tar xz -C /usr/local --strip-components=1
 RUN apk add --no-cache libstdc++ gcompat musl-dev musl-utils musl gcc
 RUN apk add php82-pdo php82-simplexml php82-xmlreader php82-sodium php82-ftp php82-gd
+USER root
