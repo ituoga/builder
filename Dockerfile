@@ -27,3 +27,6 @@ RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node
 RUN apk add --no-cache libstdc++ gcompat musl-dev musl-utils musl gcc
 RUN apk add php82-pdo php82-simplexml php82-xmlreader php82-sodium php82-ftp php82-gd
 USER root
+COPY --from=python:3.10-alpine /usr/local/bin/python /usr/local/bin/python3.10
+COPY --from=python:3.10-alpine /usr/local/bin/pip3 /usr/local/bin/pip3.10
+COPY --from=python:3.10-alpine /usr/local/lib/libpython3.10.so.1.0 /usr/local/lib/libpython3.10.so.1.0
