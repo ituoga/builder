@@ -47,8 +47,8 @@ RUN echo "#!/bin/bash" >> /usr/local/bin/npm
 # RUN echo "ln -sf /python3.10/bin/python3.10 /usr/local/bin/python" >> /usr/local/bin/npm
 # RUN echo "ln -sf /python3.10/bin/python3.10 /usr/local/bin/python3" >> /usr/local/bin/npm
 # RUN echo "ln -sf /python3.10/bin/python3.10 /usr/bin/python" >> /usr/local/bin/npm
-# RUN echo "ln -sf /python3.10/bin/python3.10 /usr/bin/python3" >> /usr/local/bin/npm
-RUN echo "/usr/local/bin/npm2 config set python /usr/bin/python3" >> /usr/local/bin/npm
+RUN echo "/usr/bin/python --version" >> /usr/local/bin/npm
+RUN echo "/usr/local/bin/npm2 config set python /usr/bin/python" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 \$@" >> /usr/local/bin/npm
 RUN chmod +x /usr/local/bin/npm
 WORKDIR /laravel
