@@ -38,7 +38,7 @@ RUN apk add alpine-sdk make g++
 RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64-usdt.tar.gz | tar xz -C /usr/local --strip-components=1
 RUN mv /usr/local/bin/npm /usr/local/bin/npm2
 RUN echo "#!/bin/bash" >> /usr/local/bin/npm
-# RUN echo "export PYTHON=/python3.10/bin/python3" >> /usr/local/bin/npm
+RUN echo "export PYTHON=/usr/bin/python" >> /usr/local/bin/npm
 # RUN echo "export $PATH" >> /usr/local/bin/npm
 # RUN echo "mv /usr/local/bin/python /usr/local/python_" >> /usr/local/bin/npm
 # RUN echo "mv /usr/local/bin/python3 /usr/local/python3_" >> /usr/local/bin/npm
