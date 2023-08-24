@@ -49,3 +49,4 @@ RUN echo "#!/bin/bash" >> /usr/local/bin/node
 RUN echo "PATH=/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin /usr/local/bin/node2 \$@" >> /usr/local/bin/node
 RUN chmod +x /usr/local/bin/node
 WORKDIR /laravel
+RUN export PATH=/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin
