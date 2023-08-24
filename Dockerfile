@@ -49,6 +49,7 @@ RUN echo "export PYTHON=/usr/bin/python" >> /usr/local/bin/npm
 # RUN echo "ln -sf /python3.10/bin/python3.10 /usr/bin/python" >> /usr/local/bin/npm
 RUN echo "/usr/bin/python --version" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 config set python /usr/bin/python" >> /usr/local/bin/npm
-RUN echo "/usr/local/bin/npm2 \$@ --python=/usr/bin/python" >> /usr/local/bin/npm
+RUN echo "PATH=/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin /usr/local/bin/npm2 \$@ --python=/usr/bin/python" >> /usr/local/bin/npm
 RUN chmod +x /usr/local/bin/npm
+RUN npm i -g node-gyp
 WORKDIR /laravel
