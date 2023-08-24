@@ -39,12 +39,8 @@ RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node
 RUN mv /usr/local/bin/npm /usr/local/bin/npm2
 RUN echo "#!/bin/bash" >> /usr/local/bin/npm
 RUN echo "export PYTHON=/python3.10/bin/python3" >> /usr/local/bin/npm
+RUN echo "export PATH=/python3.10/bin/:$PATH" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 config set python /python3.10/bin/python3" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 \$@" >> /usr/local/bin/npm
 RUN chmod +x /usr/local/bin/npm
-RUN npm install -g prebuild-install node-addon-api defaults commander prebuild prebuild-ci --unsafe-perm=true --allow-root
-RUN npm install -g napi-build-utils --unsafe-perm=true --allow-root
-RUN npm i -g node-pre-gyp prebuild prebuildify --unsafe-perm=true --allow-root
-RUN npm install -g node-gyp --unsafe-perm=true --allow-root
-RUN npm install -g node-zopfli@2.1.4  --unsafe-perm=true --allow-root
 WORKDIR /laravel
