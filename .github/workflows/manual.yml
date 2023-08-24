@@ -1,0 +1,13 @@
+name: Test Visual Regression
+
+on:
+  push: 
+    branches: [ noop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: ghcr.io/ituoga/builder:latest
+    steps:
+      - run: echo "Running"
+      - run: cd /laravel && npm install --unsafe-perm=true --allow-root
