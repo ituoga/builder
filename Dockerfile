@@ -32,7 +32,7 @@ WORKDIR /tmp
 RUN apk add zstd
 RUN wget https://github.com/indygreg/python-build-standalone/releases/download/20230726/cpython-3.10.12+20230726-x86_64_v4-unknown-linux-musl-noopt-full.tar.zst
 RUN zstd -d cpython*.zst && tar xf cpython*.tar
-RUN mv python/install /python3.10 && cp -r /python3.10/* /usr && rm -rf /python3.10
+RUN mv python/install /python3.10 && cp -r /python3.10/* /usr && cp -r /python3.10/* /usr/local && rm -rf /python3.10
 RUN rm -rf /tmp/cpython-3.10.12+20230726-x86_64_v4-unknown-linux-musl-noopt-full.tar
 RUN apk add alpine-sdk make g++
 RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64-usdt.tar.gz | tar xz -C /usr/local --strip-components=1
@@ -49,6 +49,6 @@ RUN echo "export PYTHON=/usr/bin/python" >> /usr/local/bin/npm
 # RUN echo "ln -sf /python3.10/bin/python3.10 /usr/bin/python" >> /usr/local/bin/npm
 RUN echo "/usr/bin/python --version" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 config set python /usr/bin/python" >> /usr/local/bin/npm
-RUN echo "/usr/local/bin/npm2 \$@" >> /usr/local/bin/npm
+RUN echo "/usr/local/bin/npm2 \$@ --python=/usr/bin/python" >> /usr/local/bin/npm
 RUN chmod +x /usr/local/bin/npm
 WORKDIR /laravel
