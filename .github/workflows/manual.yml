@@ -1,9 +1,8 @@
 name: Test Visual Regression
 
-on:
-  push: 
-    branches: [ noop ]
-
+on: 
+  workflow_dispatch:
+  
 jobs:
   test:
     runs-on: ubuntu-latest
