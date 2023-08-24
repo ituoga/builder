@@ -50,3 +50,4 @@ RUN echo "PATH=/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin /usr
 RUN chmod +x /usr/local/bin/node
 WORKDIR /laravel
 RUN export PATH=/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin
+RUN chmod +x /usr/local/bin/npm /usr/local/bin/node
