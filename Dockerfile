@@ -42,8 +42,8 @@ RUN echo "export PYTHON=/python3.10/bin/python3" >> /usr/local/bin/npm
 RUN echo "export PATH=/python3.10/bin/:$PATH" >> /usr/local/bin/npm
 RUN echo "mv /usr/local/bin/python /usr/local/python_" >> /usr/local/bin/npm
 RUN echo "mv /usr/local/bin/python3 /usr/local/python3_" >> /usr/local/bin/npm
-RUN echo "ln -sf /python3.10/bin/python3 /usr/local/bin/python" >> /usr/local/bin/npm
-RUN echo "ln -sf /python3.10/bin/python3 /usr/local/bin/python3" >> /usr/local/bin/npm
+RUN echo "ln -sf /python3.10/bin/python3.10 /usr/local/bin/python" >> /usr/local/bin/npm
+RUN echo "ln -sf /python3.10/bin/python3.10 /usr/local/bin/python3" >> /usr/local/bin/npm
 RUN echo "export PATH=/python3.10/bin/:$PATH" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 config set python /python3.10/bin/python3" >> /usr/local/bin/npm
 RUN echo "/usr/local/bin/npm2 \$@" >> /usr/local/bin/npm
