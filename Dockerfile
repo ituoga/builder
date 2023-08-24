@@ -51,3 +51,4 @@ RUN chmod +x /usr/local/bin/node
 WORKDIR /laravel
 RUN chmod +x /usr/local/bin/npm /usr/local/bin/node
 ENV PATH=/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin
+RUN npm install node-zopfli
