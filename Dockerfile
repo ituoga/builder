@@ -32,23 +32,42 @@ WORKDIR /tmp
 RUN apk add zstd
 RUN wget https://github.com/indygreg/python-build-standalone/releases/download/20230726/cpython-3.10.12+20230726-x86_64_v4-unknown-linux-musl-noopt-full.tar.zst
 RUN zstd -d cpython*.zst && tar xf cpython*.tar
+# RUN mv python/install /python3.10
 RUN mv python/install /python3.10 && cp -r /python3.10/* /usr && cp -r /python3.10/* /usr/local && rm -rf /python3.10
 RUN rm -rf /tmp/cpython-3.10.12+20230726-x86_64_v4-unknown-linux-musl-noopt-full.tar
 RUN apk add alpine-sdk make g++
-RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64-usdt.tar.gz | tar xz -C /usr/local --strip-components=1
-RUN npm i -g node-gyp
-RUN mv /usr/local/bin/npm /usr/local/bin/npm2
-RUN mv /usr/local/bin/node /usr/local/bin/node2
-RUN echo "#!/bin/bash" >> /usr/local/bin/npm
-RUN echo "export PYTHON=/usr/bin/python" >> /usr/local/bin/npm
-RUN echo "/usr/bin/python --version" >> /usr/local/bin/npm
-RUN echo "/usr/local/bin/npm2 config set python /usr/bin/python" >> /usr/local/bin/npm
-RUN echo "PATH=/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin /usr/local/bin/npm2 \$@ --python=/usr/bin/python" >> /usr/local/bin/npm
+RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64-musl.tar.gz | tar xz -C /usr/local --strip-components=1
+RUN npm install -g node-gyp
+# RUN mv /usr/local/bin/node /usr/local/bin/node2
+RUN echo "#!/bin/bash" > /usr/local/bin/hack.sh
+RUN echo "echo wrapper" >> /usr/local/bin/hack.sh
+RUN echo "source /.entrypoint.env" >> /usr/local/bin/hack.sh
+RUN echo "export PATH=/python3.10/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin" >> /usr/local/bin/hack.sh
+RUN echo "python --version"
+RUN echo "exec /bin/bash \"\$@\"" >> /usr/local/bin/hack.sh
+RUN chmod +x /usr/local/bin/hack.sh
 
-RUN echo "#!/bin/bash" >> /usr/local/bin/node
-RUN echo "PATH=/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin /usr/local/bin/node2 \$@" >> /usr/local/bin/node
-RUN chmod +x /usr/local/bin/node
+RUN mv /usr/local/bin/npm /usr/local/bin/npm2
+RUN echo "#!/bin/bash" > /usr/local/bin/npm
+RUN echo "export PATH=/python3.10/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin" >> /usr/local/bin/npm
+RUN echo "export PYTHON=/python3.10/bin/python3" >> /usr/local/bin/npm
+RUN echo "export npm_config_script_shell=/usr/local/bin/hack.sh" >> /usr/local/bin/npm
+RUN echo "python --version" >> /usr/local/bin/npm
+RUN echo "/usr/local/bin/npm2 config set python /python3.10/bin/pytnon3" >> /usr/local/bin/npm
+RUN echo "printenv > /.entrypoint.env" >> /usr/local/bin/npm
+RUN echo "/usr/local/bin/npm2 \$@ --python=/usr/bin/python" >> /usr/local/bin/npm
+RUN chmod +x /usr/local/bin/npm
+
+# RUN echo "#!/bin/bash" > /usr/local/bin/node
+# RUN echo "PATH=/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin /usr/local/bin/node2 \$@" >> /usr/local/bin/node
+# RUN chmod +x /usr/local/bin/node
 WORKDIR /laravel
-RUN chmod +x /usr/local/bin/npm /usr/local/bin/node
 ENV PATH=/usr/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/sbin:/bin
-RUN npm install node-zopfli
+RUN echo "#!/bin/bash" > /entrypoint.sh
+RUN echo "export PYTHON=/python3.10/bin/python3" >> /entrypoint.sh
+RUN echo "printenv" >> /.entrypoint.env
+RUN echo "export npm_config_script_shell=/usr/local/bin/hack.sh" > /entrypoint.sh
+RUN echo "exec /bin/bash \"\$@\"" > /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENV npm_config_script_shell=/usr/local/bin/hack.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
