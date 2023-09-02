@@ -33,7 +33,10 @@ RUN apk add packer --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine
 RUN apk add rclone
 RUN curl -sL https://unofficial-builds.nodejs.org/download/release/v14.21.3/node-v14.21.3-linux-x64-musl.tar.gz | tar xz -C /usr/local --strip-components=1
 RUN apk add php82-pdo php82-simplexml php82-xmlreader php82-sodium php82-ftp php82-gd  --no-cache --repository=https://dl-https://dl-cdn.alpinelinux.org/alpine/edge/community
-RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl openssh openssh-keygen
+RUN wget -q -t3 'https://packages.doppler.com/public/cli/rsa.8004D9FF50437357.key' -O /etc/apk/keys/cli@doppler-8004D9FF50437357.rsa.pub
+RUN echo 'https://packages.doppler.com/public/cli/alpine/any-version/main' | tee -a /etc/apk/repositories
+RUN apk add doppler
 
 
 # npm install --unsafe-perm=true --allow-root
