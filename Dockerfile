@@ -1,7 +1,6 @@
 FROM alpine:edge
 COPY --from=hashicorp/terraform:latest /bin/terraform /bin/terraform
 RUN apk update
-RUN apk add python3 --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.15/main
 RUN apk update && apk add ansible bash --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main
 RUN apk add zip --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main
 RUN apk add --no-cache libstdc++ gcompat musl-dev musl-utils musl gcc --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main
